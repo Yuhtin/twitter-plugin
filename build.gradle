@@ -27,7 +27,7 @@ dependencies {
 
     implementation 'com.github.HenryFabio:sql-provider:9561f20fd2'
     implementation 'com.github.SaiintBrisson.command-framework:bukkit:1.2.0'
-    implementation 'org.twitter4j:twitter4j-core:4.0.7'
+    implementation 'io.github.takke:jp.takke.twitter4j-v2:1.0.4'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
