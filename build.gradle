@@ -1,0 +1,63 @@
+plugins {
+    id "java"
+
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.3.0'
+}
+
+group 'com.yuhtin.minecraft'
+version '1.0.0'
+
+tasks.build.dependsOn('shadowJar')
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+
+    maven { url = 'https://repo.codemc.org/repository/maven-public' }
+
+    maven { url = 'https://jitpack.io/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT'
+
+    implementation 'com.github.HenryFabio:sql-provider:9561f20fd2'
+    implementation 'com.github.SaiintBrisson.command-framework:bukkit:1.2.0'
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+bukkit {
+    main = 'com.yuhtin.minecraft.twitter.TwitterPlugin'
+    authors = ['Yuhtin']
+    version = "${project.version}"
+    apiVersion = "1.13"
+}
+
+shadowJar {
+    archiveName("${project.name}-${project.version}.jar")
+
+    relocate 'com.henryfabio.sqlprovider', 'com.yuhtin.minecraft.twitter.libs.sqlprovider'
+    relocate 'com.zaxxer.hikari', 'com.yuhtin.minecraft.twitter.libs.hikari'
+
+    relocate 'me.saiintbrisson.minecraft.command', 'com.yuhtin.minecraft.twitter.libs.command.common'
+    relocate 'me.saiintbrisson.bukkit.command', 'com.yuhtin.minecraft.twitter.libs.command.bukkit'
+
+    relocate 'twitter4j', 'com.yuhtin.minecraft.twitter.libs.twitter4j'
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
